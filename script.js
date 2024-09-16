@@ -45,10 +45,7 @@ function createLoginSection(){
     passwordInput.classList.add('col-9', 'mt-2');
     signUpButton.classList.add('btn', 'btn-outline-warning', 'col-5', 'mt-3');
 
-
-
     title.textContent = 'Log in: ';
-
     userNameInput.id = 'user-name';
     userNameInput.type = 'text';
     userNameInput.placeholder = 'User name';
@@ -73,8 +70,6 @@ function createLoginSection(){
 
     signUpButton.addEventListener("click", (e)=>{
 
-  
-    
         fetch(`https://66e8028eb17821a9d9daf072.mockapi.io/users/?username=${userNameInput.value}&password=${passwordInput.value}`)
         .then(res =>res.json())
         .then (data =>{
@@ -89,15 +84,14 @@ function createLoginSection(){
             return
          }
 
-         usernameButton.textContent =data[0].username
+       
 
         loginLink.classList.add("display-invis")  
         signupLink .classList.add("display-invis") 
         usernameButton.classList.remove("display-invis") 
         logoutButton .classList.remove("display-invis")
 
-
-        createUserPage(container, userNameInput)
+        createUserPage(container, userNameInput, data[0].username)
 
       
         })
@@ -109,15 +103,14 @@ function createLoginSection(){
             });
         })
     })
-    //Error checking.............................
-  
 
+
+
+    //Error checking.............................
     return container;
 
-
-
 }
-function createUserPage(container, userNameInput) {
+function createUserPage(container, userNameInput ,userName) {
     container.innerHTML = ""
     let img = document.createElement("img")
     let name = document.createElement("h1")
@@ -132,6 +125,15 @@ function createUserPage(container, userNameInput) {
     name.textContent = "Welcome, " + userNameInput.value
     h3.textContent = "here is a cool cat"
     img.setAttribute("src", "https://img.freepik.com/premium-photo/cat-wearing-sunglasses-with-orange-lenses-pair-orange-sunglasses_867452-8549.jpg")
+  
+    loginLink.classList.add("display-invis")  
+    signupLink .classList.add("display-invis") 
+    usernameButton.classList.remove("display-invis") 
+    logoutButton .classList.remove("display-invis")
+
+    usernameButton.textContent = userName
+
+
     container.appendChild(name)
     container.appendChild(h3)
     container.appendChild(img)
@@ -157,8 +159,6 @@ function createSignUpSection() {
     let span = document.createElement('span');
 
 
-
-
     //styles
     card.classList.add('card', 'text-center', 'bg-black', 'col-5');
     cardBody.classList.add('card-body', 'col-12', 'justify-content-center');
@@ -170,7 +170,6 @@ function createSignUpSection() {
     passwordRepeatInput.classList.add('col-9', 'mt-2');
     alreadyMemberText.classList.add('mt-3');
     signUpButton.classList.add('btn', 'btn-outline-warning', 'col-5', 'mt-3');
-
 
 
     title.textContent = 'Sign Up';
@@ -319,7 +318,10 @@ function createSignUpSection() {
         .then (data =>{
     
         console.log(data)
-        createUserPage(container, userNameInput)
+
+        
+        createUserPage(container, userNameInput,data.username)
+
         
         })
     })
